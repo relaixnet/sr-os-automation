@@ -1,0 +1,7 @@
+venv
+.venv
+.direnv
+result
+.idea
+__pycache__
+secrets.yaml

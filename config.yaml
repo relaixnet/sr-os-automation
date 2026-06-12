@@ -1,0 +1,64 @@
+verify_hostkey: true
+repo:
+  force_up_to_date: true
+  force_clean_worktree: true
+  force_main_branch: true
+module_config:
+  base_config: { }
+  admin_users:
+    # schema:
+    #   username:
+    #     reset_password: bool (default false) --> initializes or resets the password for the user with a random value
+    #     ssh_keys:
+    #       rsa: list of string (default empty) --> list of RSA SSH Keys to deploy
+    #       ecdsa: list of string (default empty) --> list of ECDSA SSH Keys to deploy
+    user1:
+      ssh_keys:
+        ecdsa:
+          # randomly generated SSH-Keys
+          - "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGmrI/RTthowVgE1NFU3wB9kPawfgW7ttNXIU+TUVFE1r7xFP0ypILujgwmDN0OJDNQhb8Mw1YkeLrJ5rEwZ99g= user1@example.com"
+          - "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBObeV9bHyf9tGw6/487qc0qA/+lCLLyPT69zp0Tg0csBL/FHt5ThhNn9gyj0ev15/Xwha6PqrSgbnQ5JBfdYoGg= user1@example.com"
+        rsa:
+          # randomly generated SSH-Key
+          - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCggSs5GxzHwAUeALTYTshDUps9F2JurB1JI2njAmeHPRBsjVK9z6M6qWvggJ235WzlMHfaFD8ifsnxAdoNzPoRZaBxnCOxR0KmzUA2T3Izcgl3HzL6Pj3shJpI4JZOhKTO+KON1kcyHh5W+fmR+FS+Nmr6O9Nz12jGeeR/kE4hWegIPZyWxxmo1eXXv8+hD7XODH4rEylnfplY+Vm2BE4csXjS1qmiE4z0ySD7wongji1u+/NAVWNDfzAAiI+9W2/0BKw81ecpBQUle8R8Qoxe6spSzI5gP5bKcIafWbm71dZfohqm+1KpisF14SzDkpjP61Z0SB9czbznVF6Fb6kB user1@example.com"
+    user2:
+      ssh_keys:
+        ecdsa:
+          # randomly generated SSH-Key
+          - "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJbPtYPeAXxt9/TG3fa3DC2EjhniGgL/G1fIqEUlWpi5ouNDCkipTZeTPz2XoV9qybjbSdTivcX5LRKJWLm8g5s= user2@example.com"
+  block_lists:
+    ipv4:
+      # Bogons
+      - 0.0.0.0/8 # Unspecified
+      - 10.0.0.0/8 # RFC 1918
+      - 100.64.0.0/10 # RFC 6598
+      - 127.0.0.0/8 # Loopback
+      - 172.16.0.0/12 # RFC 1918
+      - 192.0.0.0/24 # IETF Protocol Assignments + DS-Lite
+      - 192.0.2.0/24 # TEST-NET-1
+      - 192.88.99.0/24 # RFC 3068
+      - 192.168.0.0/16 # RFC 1918
+      - 198.18.0.0/15 # Benchmark tests of network interconnect devices
+      - 198.51.100.0/24 # TEST-NET-2
+      - 203.0.113.0/24 # TEST-NET-3
+      - 224.0.0.0/4 # Multicast
+      - 255.255.255.255/32 # Broadcast
+      # Attackers
+    ipv6:
+      # Bogons
+      - ::/16 # Unspecified + Loopback
+      - 100::/64 # Discard-Only
+      - 2001::/23 # IETF Protocol Assignments + TEREDO + Benchmarking
+      - 2001:db8::/32 # Documentation
+      - 2001:10::/28 # ORCHID
+      - 2002::/16 # 6to4
+      - 3ffe::/16 # RFC 2471
+      - 5f00::/8 # RFC 1897
+      - fc00::/7 # RFC 4193
+      - ff00::/8 # Multicast
+      # Attackers
+  emergency_admin:
+    enabled: false
+  peerings:
+    deploy_irr_filters: false
+  policies: { }
