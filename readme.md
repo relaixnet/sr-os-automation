@@ -140,7 +140,7 @@ The main script of the project is the [apply.py](./apply.py):
 
 ```
 $ ./apply.py -h
-usage: apply.py [-h] [-c CONFIG] [-s SECRETSCONFIG] [-m MODULES] [-u USER] [-p PASSWORD] [--askpass] [--commit] [--commit_yes] [--diff] target
+usage: apply.py [-h] [-c CONFIG] [-s SECRETSCONFIG] [-m MODULES] [-t TIMEOUT] [-u USER] [-p PASSWORD] [--askpass] [--commit] [--commit_yes] [--diff] target
 
 SR OS NETCONF automation
 
@@ -154,10 +154,12 @@ options:
                         Path to the secrets Config-File
   -m, --modules MODULES
                         Comma separated list of modules to run
-  -u, --user USER       Username to use
+  -t, --timeout TIMEOUT
+                        NETCONF timeout in seconds (default 300)
+  -u, --user USER       Username to use (default 'admin')
   -p, --password PASSWORD
-                        Password for the user
-  --askpass             Ask for password
+                        Password for the user (default 'admin')
+  --askpass             Ask for password (overrides the --password flag)
   --commit              Commit changes
   --commit_yes          Commit changes without asking
   --diff                Print diff
