@@ -31,14 +31,15 @@ class SROSVersion:
         return f"{self.major}.{self.minor}.R{self.release}"
 
 
-def connect(host: str, username: str, password: str, port: int, hostkey_verify: bool) -> Connection:
+def connect(host: str, username: str, password: str,
+            port: int = 830, timeout: int = 300, hostkey_verify: bool = True) -> Connection:
     # instantiate Connection manually for ssh_config support
     conn = Connection(host=host,
                       username=username,
                       password=password,
                       port=port,
                       device_params={'name': 'sros'},
-                      manager_params={'timeout': 300},
+                      manager_params={'timeout': timeout},
                       nc_params={'capabilities': ['urn:nokia.com:nc:pysros:pc']},
                       hostkey_verify=hostkey_verify,
                       yang_directory=None,

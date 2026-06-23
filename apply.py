@@ -35,9 +35,10 @@ def main() -> int:
     parser.add_argument("-c", "--config", help="Path to the Config-File")
     parser.add_argument("-s", "--secretsconfig", help="Path to the secrets Config-File")
     parser.add_argument("-m", "--modules", help="Comma separated list of modules to run")
-    parser.add_argument("-u", "--user", help="Username to use")
-    parser.add_argument("-p", "--password", help="Password for the user")
-    parser.add_argument("--askpass", action="store_true", help="Ask for password")
+    parser.add_argument("-t", "--timeout", help="NETCONF timeout in seconds (default 300)", default=300, type=int)
+    parser.add_argument("-u", "--user", help="Username to use (default 'admin')", default="admin", type=str)
+    parser.add_argument("-p", "--password", help="Password for the user (default 'admin')", default="admin", type=str)
+    parser.add_argument("--askpass", action="store_true", help="Ask for password (overrides the --password flag)")
     parser.add_argument("--commit", action="store_true", help="Commit changes")
     parser.add_argument("--commit_yes", action="store_true", help="Commit changes without asking")
     parser.add_argument("--diff", action="store_true", help="Print diff")
@@ -47,6 +48,10 @@ def main() -> int:
 
     if not args.modules:
         print("No modules given, exiting.")
+        return 1
+
+    if args.timeout < 1:
+        print(f"Invalid timeout value {args.timeout}, exiting.")
         return 1
 
     final_config_location = args.config if args.config else config_location
@@ -177,14 +182,13 @@ def main() -> int:
         print("No modules loaded, exiting.")
         return 1
 
-    user = args.user if args.user else "admin"
-    password = "admin"
+    user = args.user
+    password = args.password
     if args.askpass:
         password = getpass("Password: ")
-    elif args.password:
-        password = args.password
 
-    connection = connect(args.target, user, password, 830, config["verify_hostkey"])
+    connection = connect(args.target, user, password, port=830,
+                         timeout=args.timeout, hostkey_verify=config["verify_hostkey"])
 
     for module in loaded_modules:
         try:
