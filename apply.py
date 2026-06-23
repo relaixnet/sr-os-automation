@@ -30,7 +30,8 @@ module_map = {
 def main() -> int:
     parser = argparse.ArgumentParser(
         prog='apply.py',
-        description='SR OS NETCONF automation')
+        description='SR OS NETCONF automation'
+    )
 
     parser.add_argument("-c", "--config", help="Path to the Config-File")
     parser.add_argument("-s", "--secretsconfig", help="Path to the secrets Config-File")
