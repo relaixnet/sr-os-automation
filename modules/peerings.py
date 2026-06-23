@@ -55,15 +55,13 @@ class PeeringsModule(BaseModule):
         as_data = self.get_as_data(as_id)
 
         if check_for_tag(as_data, "no-irr-filter"):
+            # skip ASes that are excluded by tag in peering-manager
             return True
 
         if safe_get(as_data, "prefixes"):
             sum_len = len(as_data["prefixes"]["ipv4"]) + len(as_data["prefixes"]["ipv6"])
-            if sum_len >= 10000:
-                # for some reason, pySROS fails to deploy prefix lists with more than ~10k entries
-                # so we just skip IRR filters for ASes with >= 10k prefixes for now
-                return True
-            elif sum_len == 0:
+            if sum_len == 0:
+                # sanity check: skip ASes with 0 prefixes in total (should never happen)
                 return True
 
         return False

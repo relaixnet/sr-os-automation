@@ -323,9 +323,6 @@ Depends on the `policies` module (shown next) to request some special policies f
 
 > [!NOTE]
 > This module also has the capability to generate IRR-based import filters for all peers using the Peering-Manager. It is currently disabled but can be enabled in the [config.yaml](./config.yaml).
->
-> Please note that this feature currently skips IRR-filter-generation for ASes with >= 10k prefixes, since pySROS throws an error if you try to deploy prefix lists with more than ~10k entries.
-> We don't know the reason for this error yet, but at least you can use the current state of the module to deploy IRR-based import filters for all ASes you peer with less than 10k prefixes.
 
 Points to apply in the main config tree:
 ```
