@@ -61,8 +61,9 @@ class PeeringsModule(BaseModule):
         if safe_get(as_data, "prefixes"):
             sum_len = len(as_data["prefixes"]["ipv4"]) + len(as_data["prefixes"]["ipv6"])
             if sum_len == 0:
-                # sanity check: skip ASes with 0 prefixes in total (should never happen)
-                return True
+                # sanity check: raise exception for ASes with 0 prefixes in total
+                asn = as_data["asn"]
+                self.raise_exception(f"Would generate empty IRR filter for AS{asn}, aborting.")
 
         return False
 
