@@ -38,7 +38,7 @@ def connect(host: str, username: str, password: str, port: int, hostkey_verify: 
                       password=password,
                       port=port,
                       device_params={'name': 'sros'},
-                      manager_params={'timeout': 30},
+                      manager_params={'timeout': 300},
                       nc_params={'capabilities': ['urn:nokia.com:nc:pysros:pc']},
                       hostkey_verify=hostkey_verify,
                       yang_directory=None,
